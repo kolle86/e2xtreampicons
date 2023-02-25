@@ -3,14 +3,7 @@ ini_set('display_errors', 1);
 set_time_limit(100000);
 ini_set('default_socket_timeout', 3);
 
-/*******************CONFIG*******************/
-$ftp_server = ""; //IP of e2 Receiver
-$ftp_user = ""; // FTP User on e2 receiver
-$ftp_pass = ""; // FTP password
-$user = ""; // xtream codes username
-$pass = ""; // xtream codes password
-$dns = "http://providerdns:providerport"; // xtream codes provider url
-/*******************************************/
+require("config.php");
 
 $serviceArray = array();
 $bouquets = array();
@@ -112,7 +105,7 @@ if(isset($_POST["uploadFTP"])){
 $ftp_conn = connectFTP($ftp_server,$ftp_user, $ftp_pass, $ftp_login);
 
 if($clearPiconsAtStart){
-    echo "Deleting all IPTV-Picons in /usr/share/enigma2/picon/...<br>";
+    //echo "Deleting all IPTV-Picons in /usr/share/enigma2/picon/...<br>";
     $files = ftp_nlist($ftp_conn, "/usr/share/enigma2/picon/");
     foreach ($files as $file)
     {
@@ -194,17 +187,7 @@ if($clearPiconsAtStart){
         <div class="container py-3 px-3 bg-secondary text-white">
 
         <?php
-        
-        /*
-        $servicesFromBouquets =  json_decode(file_get_contents("http://$ftp_server/api/getallservices"), true);
-
-        array_walk_recursive($servicesFromBouquets,function($item,$key) use(&$serviceArray) {
-            if($key == "servicename"){
-                $serviceArray[] = ($item);
-            }
-        },$serviceArray);
-        */
-
+  
         $userBouquets =  json_decode(file_get_contents("http://$ftp_server/api/bouquets"), true);
         
         foreach($userBouquets as $key => $value){
@@ -215,7 +198,6 @@ if($clearPiconsAtStart){
 
 
         $liveStreamCategories = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_categories", false, $context), true);
-        //print_r($liveStreamCategories);
         echo '<p class="text-dark"><h6>Select categories to generate picons for. Userbouquets from receiver are pre-selected.</h6></p>';
 
         echo '<form action="index.php" method="post">';
@@ -337,4 +319,3 @@ if($clearPiconsAtStart){
     </script>
 </body>
 </html>
-
