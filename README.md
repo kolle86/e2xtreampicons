@@ -10,21 +10,17 @@ I recommend using an xampp-system on Windows, cause the php-gdlib image library 
 
 If you do use xampp, just copy the index.php to the htdocs folder and edit it. You have to enter some details on top of the script:
 
-`/*******************CONFIG*******************/
+`$ftp_server = ""; //IP of e2 Receiver`
 
-$ftp_server = ""; //IP of e2 Receiver
+`$ftp_user = ""; // FTP User on e2 receiver`
 
-$ftp_user = ""; // FTP User on e2 receiver
+`$ftp_pass = ""; // FTP password`
 
-$ftp_pass = ""; // FTP password
+`$user = ""; // xtream codes username`
 
-$user = ""; // xtream codes username
+`$pass = ""; // xtream codes password`
 
-$pass = ""; // xtream codes password
-
-$dns = "http://providerdns:providerport"; // xtream codes provider url
-
-/*******************************************/`
+`$dns = "http://providerdns:providerport"; // xtream codes provider url`
 
 After that you should be able to open the webinterface in your browser via *localhost*.
 
