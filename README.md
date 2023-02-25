@@ -7,7 +7,9 @@ The picons are getting cropped and sized correctly to xpicon-size.
 
 # Requirements
 - FTP server enabled on e2 receiver
-- OpenWebif enabled on e2 receiver (API reachable without authentication!)
+- OpenWebif enabled on e2 receiver (*API reachable without authentication!*)
+
+You can test your api by opening _http://IP-OF-YOUR-BOX/api/about_ in your browser
 
 # Usage
 You have to run this script in your local network, e.g. on an apache2 webserver.
