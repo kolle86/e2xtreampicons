@@ -3,12 +3,17 @@ PHP Script to download enigma2 picons for xtream codes playlists and upload the 
 
 The picons are getting cropped and sized correctly to xpicon-size.
 ![screenshot](screenshot.png)
+
+# Requirements
+- FTP server enabled on e2 receiver
+- OpenWebif enabled on e2 receiver (API reachable without authentication!)
+
 # Usage
 You have to run this script in your local network, e.g. on an apache2 webserver.
 
 I recommend using an xampp-system on Windows, cause the php-gdlib image library has a transparency bug in some linux distributions that will lead to wired images.
 
-If you do use xampp, just copy the index.php to the htdocs folder and edit it. You have to enter some details on top of the script:
+If you do use xampp, just copy the php files to the htdocs folder and edit the config.php. You have to enter:
 
 `$ftp_server = ""; //IP of e2 Receiver`
 
