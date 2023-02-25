@@ -69,7 +69,7 @@ function clean($string) {
  }
 
 function get_http_response_code($url, $context) {
-    $headers = get_headers($url, false, $context);
+    $headers = get_headers($url, false);
     return substr($headers[0], 9, 3);
 }
 
@@ -177,7 +177,7 @@ if($clearPiconsAtStart){
                 }
                 echo  " [$hardware] <br> ";
 
-                $xtream_info = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass", false, $context), true);
+                $xtream_info = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass", false), true);
                 $account = "Xtream Account: "  . $xtream_info["user_info"]["status"] . " | Expires: " . date('d.m.Y', $xtream_info["user_info"]["exp_date"]);
                 echo $account;
             ?>
@@ -197,7 +197,7 @@ if($clearPiconsAtStart){
         }
 
 
-        $liveStreamCategories = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_categories", false, $context), true);
+        $liveStreamCategories = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_categories", false), true);
         echo '<p class="text-dark"><h6>Select categories to generate picons for. Userbouquets from receiver are pre-selected.</h6></p>';
 
         echo '<form action="index.php" method="post">';
@@ -257,7 +257,7 @@ if($clearPiconsAtStart){
                     if(get_http_response_code($value["stream_icon"], $context) == "200"){
                     
                         //$picon = file_get_contents(urlencode($channel->icon["src"]));
-                        $picon = file_get_contents($value["stream_icon"], false, $context);
+                        $picon = file_get_contents($value["stream_icon"], false);
 
                         $filename = strrchr($value["stream_icon"], ".");
 
