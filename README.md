@@ -2,6 +2,7 @@
 PHP Script to download enigma2 picons for xtream codes playlists and upload the picons to e2 receiver via ftp. This is helpful if you have created iptv bouquets with plugins like jedimakerxtream.
 
 The picons are getting cropped and sized correctly to xpicon-size.
+
 ![screenshot](screenshot.png)
 
 # Requirements
