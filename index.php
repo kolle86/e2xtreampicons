@@ -254,7 +254,7 @@ if($clearPiconsAtStart){
                 echo "Getting picon for: " . $value["name"] . ": " . $value["stream_icon"] . "<br>";
                 if(isset($value["stream_icon"]) && $value["stream_icon"] != ""){
 
-                    if(get_http_response_code($value["stream_icon"], $context) == "200"){
+                    //if(get_http_response_code($value["stream_icon"], $context) == "200"){
                     
                         $picon = file_get_contents($value["stream_icon"], false);
 
@@ -291,7 +291,7 @@ if($clearPiconsAtStart){
                             }
                             
                         }
-                    }    
+                    //}    
                 }   
             }
             if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
