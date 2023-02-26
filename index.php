@@ -19,7 +19,7 @@ $context = stream_context_create($opts);
 function clean($string) {
     $string = strtolower($string);
     $search = array("+","*","&","ä","Ä","ö","Ö","ü","Ü", "ß", "《", "》", ":", "-", " ");
-    $replace = array("plus","star","and","ae","Ae","oe","Oe","ue","Ue","","","","", "", "");
+    $replace = array("plus","star","and","a","A","o","O","u","U","","","","", "", "");
     $string = str_replace($search, $replace, $string);
     return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
  }
