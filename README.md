@@ -7,14 +7,14 @@ The picons are getting cropped and sized correctly to xpicon-size.
 
 # Requirements
 - FTP server enabled on e2 receiver
-- OpenWebif enabled on e2 receiver (*API reachable without authentication!*)
+- OpenWebif enabled on e2 receiver (*API reachable **without** authentication!*)
 
 You can test your api by opening _http://IP-OF-YOUR-BOX/api/about_ in your browser
 
 # Usage
 You have to run this script in your local network, e.g. on an apache2 webserver.
 
-I recommend using an xampp-system on Windows, cause the php-gdlib image library has a transparency bug in some linux distributions that will lead to wired images.
+I recommend using an [XAMPP](https://www.apachefriends.org/de/index.html)-system on Windows, cause the php-gdlib image library has a transparency bug in some linux distributions that will lead to wired backgrounds on the picon-images.
 
 If you do use xampp, just copy the php files to the htdocs folder and edit the config.php. You have to enter:
 
@@ -38,7 +38,7 @@ If all went well, you should see your live categories in the list. Your Userbouq
 
 Check the box, if you want to upload the picons directly to your e2 box. Otherwise, picons will be created in subfolder /picon (you have to create that first) of your htdocs folder.
 
-Submit the page by hitting *Generate Picons*. Page should reload with an output-container at the end. Depending on amount of channels, the creation will take some time. Wait till you get the *Finished* message at the end.
+Submit the page by hitting *Generate Picons*. Page should reload with an output-container at the end. Depending on amount of channels, the creation will take some time. As long as the page loading-indicator is busy, the process is ongoing. Wait till you get the *Finished* message at the end of the page.
 
 Reading the output you can find errors like dead urls for picons in your providers playlist.
 
