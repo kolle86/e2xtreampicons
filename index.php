@@ -241,7 +241,7 @@ if($clearPiconsAtStart){
             echo '<div class="mt-3"><p class="text-monospace alert alert-console text-white overflow-auto text-nowrap">';
             echo 'Generating Picons - this may take a while...<br>=============================================<br>';
             foreach($_POST["live_categories"] as $key => $value){
-                $liveStreamsCategory = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_streams&category_id=" . $value, false, $context), true);
+                $liveStreamsCategory = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_streams&category_id=" . $value, false), true);
                 $liveStreams = array_merge($liveStreams, $liveStreamsCategory);
             }
         }
@@ -256,7 +256,6 @@ if($clearPiconsAtStart){
 
                     if(get_http_response_code($value["stream_icon"], $context) == "200"){
                     
-                        //$picon = file_get_contents(urlencode($channel->icon["src"]));
                         $picon = file_get_contents($value["stream_icon"], false);
 
                         $filename = strrchr($value["stream_icon"], ".");
