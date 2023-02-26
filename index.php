@@ -247,12 +247,13 @@ if($clearPiconsAtStart){
 
                 echo "Getting picon for: " . $value["name"] . ": " . $value["stream_icon"] . "<br>";
                 if(isset($value["stream_icon"]) && $value["stream_icon"] != ""){
-                    
+
                     $picon = file_get_contents($value["stream_icon"], false);
 
                     if($picon != false){
-
-                        $filename = strrchr($value["stream_icon"], ".");
+                        $url = strtok($value["stream_icon"], "?");
+                        $url = strtok($value["stream_icon"], "/");
+                        $filename = strrchr($url, ".");
 
                         $remotefile='/usr/share/enigma2/picon/' . $displayname . ".png";
                         $localfile='picon/' . $displayname . ".png";
