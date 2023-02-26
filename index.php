@@ -279,11 +279,10 @@ if($clearPiconsAtStart){
                         if (file_exists("picon/" . $displayname . $filename) && filesize("picon/" . $displayname . $filename) > 0) {
                             if (exif_imagetype("picon/" . $displayname . $filename) != false ) {
                                 resizePicon("picon/" . $displayname . $filename);
-                                if(!ftp_nlist($ftp_conn, "/")){
-                                    $ftp_conn = connectFTP($ftp_server,$ftp_user, $ftp_pass, $login);
-                                }
-                                
                                 if($uploadFTP){
+                                    if(!ftp_nlist($ftp_conn, "/")){
+                                        $ftp_conn = connectFTP($ftp_server,$ftp_user, $ftp_pass, $login);
+                                    }
                                     ftp_put($ftp_conn, $remotefile, $localfile, FTP_BINARY);
                                 }
                             }
