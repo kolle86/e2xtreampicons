@@ -2,7 +2,6 @@
 ini_set('display_errors', 1);
 set_time_limit(100000);
 ini_set('default_socket_timeout', 3);
-
 require("config.php");
 
 $serviceArray = array();
@@ -67,11 +66,6 @@ function clean($string) {
     imagepng($blankImage, $originalImage);
     
  }
-
-function get_http_response_code($url, $context) {
-    $headers = get_headers($url, false);
-    return substr($headers[0], 9, 3);
-}
 
 function connectFTP($server, $user, $pass, &$ftp_login){
     $ftp_conn = ftp_connect($server);
@@ -254,7 +248,9 @@ if($clearPiconsAtStart){
                 echo "Getting picon for: " . $value["name"] . ": " . $value["stream_icon"] . "<br>";
                 if(isset($value["stream_icon"]) && $value["stream_icon"] != ""){
                     
-                        $picon = file_get_contents($value["stream_icon"], false);
+                    $picon = file_get_contents($value["stream_icon"], false);
+
+                    if($picon != false){
 
                         $filename = strrchr($value["stream_icon"], ".");
 
@@ -289,6 +285,7 @@ if($clearPiconsAtStart){
                             }
                             
                         }
+                    }
                 }   
             }
             if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
