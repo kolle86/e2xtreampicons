@@ -252,8 +252,8 @@ if($clearPiconsAtStart){
 
                     if($picon != false){
                         $url = strtok($value["stream_icon"], "?");
-                        $url = strtok($value["stream_icon"], "/");
                         $filename = strrchr($url, ".");
+                        $filename = strtok($filename, "/");
 
                         $remotefile='/usr/share/enigma2/picon/' . $displayname . ".png";
                         $localfile='picon/' . $displayname . ".png";
