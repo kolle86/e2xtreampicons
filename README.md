@@ -1,5 +1,5 @@
 # e2xtreampicons
-PHP Script to download enigma2 picons for xtream codes playlists and upload the picons to e2 receiver via ftp. This is helpful if you have created iptv bouquets with plugins like jedimakerxtream.
+PHP Script to download channel icons from xtream codes playlists and upload them as picons to enigma2 receiver via ftp. This is helpful if you have created iptv bouquets with plugins like jedimakerxtream.
 
 The picons are getting cropped and sized correctly to xpicon-size.
 
