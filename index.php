@@ -231,14 +231,23 @@ if($clearPiconsAtStart){
 
         </div>
     <?php
+        if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
+            echo '<button id="loading_button" class="btn btn-primary" name="generate_picons" value="Generate Picons" type="submit" formmethod="post" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Generating...this may take some time...
+          </button>';
+        } else{
+            echo '<input class="btn btn-primary" name="generate_picons" value="Generate Picons" type="submit" formmethod="post">';
 
-        echo '<input class="btn btn-primary" name="generate_picons" value="Generate Picons" type="submit" formmethod="post">';
+        }
+
         echo '</div></form>';
-
+        ob_flush();
+        flush();
         $liveStreams = array();
         if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
             echo '<div class="mt-3"><p class="text-monospace alert alert-console text-white overflow-auto text-nowrap">';
-            echo 'Generating Picons - this may take a while...<br>=============================================<br>';
+            echo 'Log output<br>=============================================<br>';
             foreach($_POST["live_categories"] as $key => $value){
                 $liveStreamsCategory = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_streams&category_id=" . $value, false), true);
                 $liveStreams = array_merge($liveStreams, $liveStreamsCategory);
@@ -297,6 +306,7 @@ if($clearPiconsAtStart){
             if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
                 echo "=============================================<br>Finished!";
                 echo '</div></p>';
+                echo '<script>let lb=document.getElementById("loading_button"); lb.removeChild(lb.children[0]);lb.disabled="";lb.innerHTML="Generate";</script>';    
             }
 
         ?>
