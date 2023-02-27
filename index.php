@@ -306,7 +306,7 @@ if($clearPiconsAtStart){
             if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
                 echo "=============================================<br>Finished!";
                 echo '</div></p>';
-                echo '<script>let lb=document.getElementById("loading_button"); lb.removeChild(lb.children[0]);lb.disabled="";lb.innerHTML="Generate";</script>';    
+                echo '<script>let lb=document.getElementById("loading_button"); lb.removeChild(lb.children[0]);lb.disabled="";lb.innerHTML="Generate Picons";</script>';    
             }
 
         ?>
