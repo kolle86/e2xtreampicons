@@ -160,16 +160,20 @@ if($clearPiconsAtStart){
             <p>
             <?php
                 echo "<hr>";
+                if($ftp_login){
+                    $e2_info =  json_decode(file_get_contents("http://$ftp_server/api/about"), true);
+                    $hardware = $e2_info['info']['brand'] . $e2_info['info']['model'];
 
-                $e2_info =  json_decode(file_get_contents("http://$ftp_server/api/about"), true);
-                $hardware = $e2_info['info']['brand'] . $e2_info['info']['model'];
+                }
 
                 if($ftp_login){
                     echo "Connected as $ftp_user@$ftp_server";
+                    echo  " [$hardware] <br> ";
+
                 }else{
-                    echo "No FTP-Connection";
+                    echo '<span class="badge rounded-pill bg-danger">No FTP-Connection</span><br>';                
+
                 }
-                echo  " [$hardware] <br> ";
 
                 $xtream_info = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass", false), true);
                 $account = "Xtream Account: "  . $xtream_info["user_info"]["status"] . " | Expires: " . date('d.m.Y', $xtream_info["user_info"]["exp_date"]);
@@ -181,15 +185,16 @@ if($clearPiconsAtStart){
         <div class="container py-3 px-3 bg-secondary text-white">
 
         <?php
-  
-        $userBouquets =  json_decode(file_get_contents("http://$ftp_server/api/bouquets"), true);
-        
-        foreach($userBouquets as $key => $value){
-            foreach($value as $key2 => $value2){
-                $bouquets[] = $value2[1];
-            }        
-        }
+        if($ftp_login){
 
+            $userBouquets =  json_decode(file_get_contents("http://$ftp_server/api/bouquets"), true);
+            
+            foreach($userBouquets as $key => $value){
+                foreach($value as $key2 => $value2){
+                    $bouquets[] = $value2[1];
+                }        
+            }
+        }
 
         $liveStreamCategories = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_categories", false), true);
         echo '<p class="text-dark"><h6>Select categories to generate picons for. Userbouquets from receiver are pre-selected.</h6></p>';
