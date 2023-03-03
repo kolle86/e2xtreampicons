@@ -7,14 +7,6 @@ require("config.php");
 $serviceArray = array();
 $bouquets = array();
 $ftp_login = false;
-$opts = array(
-    'http'=>array(
-      'method'=>"GET",
-      'header'=>"Accept-language: en\r\n" .
-                "Cookie: foo=bar\r\n"
-    )
-  );
-$context = stream_context_create($opts);
 
 function clean($string) {
     $string = strtolower($string);
@@ -146,14 +138,31 @@ if($clearPiconsAtStart){
             border-color: #4D1491 !important; 
         }
 
-
+        .list-group{
+            max-height: 400px;
+        }
     </style>
+    <script>
+        var checked = true;
+        function toggleSelect(){
+            listNodes = document.getElementsByName("live_categories[]");
+            checked = !checked;
+
+            listNodes.forEach(
+                function(node, index){
+                    node.checked = checked;
+                }
+            );
+            
+        }
+    
+    </script>
     <title>E2 Xtream Picons</title>
 </head>
 <body>
     <div class="container p-0 bg-secondary vh-100">
 
-        <div class="container p-3 bg-primary text-white text-center ">
+        <div class="container p-2 bg-primary text-white text-center ">
             <h2>E2 ❌TREAM PICONS</h2>
             <p>
             <?php
@@ -180,7 +189,7 @@ if($clearPiconsAtStart){
 
             </p>
         </div>
-        <div class="container py-3 px-3 bg-secondary text-white">
+        <div class="container py-2 px-3 bg-secondary text-white">
 
         <?php
         if($ftp_login){
@@ -196,20 +205,26 @@ if($clearPiconsAtStart){
 
         $liveStreamCategories = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_categories", false), true);
         echo '<p class="text-dark"><h6>Select categories to generate picons for. Userbouquets from receiver are pre-selected.</h6></p>';
+        echo '<button type="button" class="btn btn-primary btn-sm rounded-0" onclick="toggleSelect()">Select/Deselect All</button>';
 
         echo '<form action="index.php" method="post">';
-        echo '<div class="form-group">';
-        echo '<select class="form-control" name="live_categories[]" Size="20" multiple="multiple">';
+        echo '<div class="list-group overflow-auto rounded-0">';
+        //echo '<select class="form-control" name="live_categories[]" Size="20" multiple="multiple">';
         foreach($liveStreamCategories as $key => $value){
             if(array_search($value['category_name'], $bouquets) != false){
-                $selected = "selected";
+                $checked = "checked";
             }else{
-                $selected = "";
+                $checked = "";
             }
-            echo "<option " . $selected . " value=" . $value['category_id'] .">" . $value['category_name']. "</option>";
+            //echo "<option " . $selected . " value=" . $value['category_id'] .">" . $value['category_name']. "</option>";
+            echo '<label class="list-group-item">
+                <input ' . $checked . ' class="form-check-input me-1" type="checkbox" name="live_categories[]" value=' . $value['category_id'] .'>
+                '. $value['category_name'].'
+                </label>';
         }
-        echo "</select>";
+        //echo "</select>";
         ?>
+        </div>
         <div class="form-check mt-3">
         <label class="form-check-label">
             <?php    
@@ -230,16 +245,16 @@ if($clearPiconsAtStart){
         </div>
     <?php
         if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
-            echo '<button id="loading_button" class="btn btn-primary" name="generate_picons" value="Generate Picons" type="submit" formmethod="post" disabled>
+            echo '<button id="loading_button" class="btn btn-primary rounded-0" name="generate_picons" value="Generate Picons" type="submit" formmethod="post" disabled>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Generating...this may take some time...
           </button>';
         } else{
-            echo '<input class="btn btn-primary" name="generate_picons" value="Generate Picons" type="submit" formmethod="post">';
+            echo '<input class="btn btn-primary rounded-0" name="generate_picons" value="Generate Picons" type="submit" formmethod="post">';
 
         }
 
-        echo '</div></form>';
+        echo '</form>';
         ob_flush();
         flush();
         $liveStreams = array();
