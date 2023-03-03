@@ -125,8 +125,8 @@ if($clearPiconsAtStart){
         .alert-console{
             background-color: #0c0c0c !important;
             font-size: .9em;
-            min-height: 400px;
-            max-height: 400px;
+            min-height: 600px;
+            max-height: 600px;
 
         }
 
@@ -167,7 +167,7 @@ if($clearPiconsAtStart){
             <h2>E2 ❌TREAM PICONS</h2>
             <p>
             <?php
-                echo "<hr>";
+                echo "<hr><p>";
                 if($ftp_login){
                     $e2_info =  json_decode(file_get_contents("http://$ftp_server/api/about"), true);
                     $hardware = $e2_info['info']['brand'] . $e2_info['info']['model'];
@@ -203,130 +203,125 @@ if($clearPiconsAtStart){
                 }        
             }
         }
+        if(!isset($_POST["generate_picons"]) && !isset($_POST["live_categories"])){
+            $liveStreamCategories = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_categories", false), true);
+            echo '<h6 class="my-3">Select categories to generate picons for. Userbouquets from receiver are pre-selected.</h6>';
+            echo '<button type="button" class="btn btn-primary btn-sm rounded-0" onclick="toggleSelect()">Select/Deselect All</button>';
 
-        $liveStreamCategories = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_categories", false), true);
-        echo '<p class="text-dark"><h6>Select categories to generate picons for. Userbouquets from receiver are pre-selected.</h6></p>';
-        echo '<button type="button" class="btn btn-primary btn-sm rounded-0" onclick="toggleSelect()">Select/Deselect All</button>';
-
-        echo '<form action="index.php" method="post">';
-        echo '<div class="list-group overflow-auto rounded-0">';
-        //echo '<select class="form-control" name="live_categories[]" Size="20" multiple="multiple">';
-        foreach($liveStreamCategories as $key => $value){
-            if(array_search($value['category_name'], $bouquets) != false){
-                $checked = "checked";
-            }else{
-                $checked = "";
+            echo '<form action="index.php" method="post">';
+            echo '<div class="list-group overflow-auto rounded-0">';
+            //echo '<select class="form-control" name="live_categories[]" Size="20" multiple="multiple">';
+            foreach($liveStreamCategories as $key => $value){
+                if(array_search($value['category_name'], $bouquets) != false){
+                    $checked = "checked";
+                }else{
+                    $checked = "";
+                }
+                //echo "<option " . $selected . " value=" . $value['category_id'] .">" . $value['category_name']. "</option>";
+                echo '<label class="list-group-item">
+                    <input ' . $checked . ' class="form-check-input me-1" type="checkbox" name="live_categories[]" value=' . $value['category_id'] .'>
+                    '. $value['category_name'].'
+                    </label>';
             }
-            //echo "<option " . $selected . " value=" . $value['category_id'] .">" . $value['category_name']. "</option>";
-            echo '<label class="list-group-item">
-                <input ' . $checked . ' class="form-check-input me-1" type="checkbox" name="live_categories[]" value=' . $value['category_id'] .'>
-                '. $value['category_name'].'
-                </label>';
-        }
-        //echo "</select>";
-        ?>
-        </div>
-        <div class="form-check mt-3">
-        <label class="form-check-label">
-            <?php    
-            if($ftp_login){
-                $disabled = "";
-            }else{
-                $disabled = "disabled";
-            }
-            echo '<input ' . $disabled . ' id="checkFTP" class="form-check-input" type="checkbox" name="uploadFTP" onclick="toggleClearCheckbox()"> Upload via FTP. If unchecked, Picons will be created in subfolder /picon';
-            ?>
-        </label>
-        </div>
-        <div class="form-check mx-4 mb-3">
-        <label class="form-check-label">
-            <input id="checkClearPicons" class="form-check-input" type="checkbox" name="clearPicons" disabled> Clear all IPTV-Picons on receiver before uploading via FTP
-        </label>
+            //echo "</select>";
+            echo '
+            </div>
+            <div class="form-check mt-3">
+            <label class="form-check-label">';
+                    
+                if($ftp_login){
+                    $disabled = "";
+                }else{
+                    $disabled = "disabled";
+                }
+            echo '<input ' . $disabled . ' id="checkFTP" class="form-check-input" type="checkbox" name="uploadFTP" onclick="toggleClearCheckbox()"> Upload via FTP. If unchecked, Picons will be created in subfolder /picon            
+            </label>
+            </div>
+            <div class="form-check mx-4 mb-3">
+            <label class="form-check-label">
+                <input id="checkClearPicons" class="form-check-input" type="checkbox" name="clearPicons" disabled> Clear all IPTV-Picons on receiver before uploading via FTP
+            </label>
 
-        </div>
-    <?php
-        if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
-            echo '<button id="loading_button" class="btn btn-primary rounded-0" name="generate_picons" value="Generate Picons" type="submit" formmethod="post" disabled>
+            </div>';
+            echo '<input class="btn btn-primary rounded-0" name="generate_picons" value="Generate Picons" type="submit" formmethod="post">';
+            echo '</form>';
+
+        }else if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
+            echo '<a id="loading_button" class="btn btn-primary rounded-0 disabled" href="index.php">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Generating...this may take some time...
-          </button>';
-        } else{
-            echo '<input class="btn btn-primary rounded-0" name="generate_picons" value="Generate Picons" type="submit" formmethod="post">';
+          </a>';
 
-        }
 
-        echo '</form>';
-        ob_flush();
-        flush();
-        $liveStreams = array();
-        if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
-            echo '<div class="mt-3"><p class="text-monospace alert alert-console text-white overflow-auto text-nowrap">';
+            ob_flush();
+            flush();
+            $liveStreams = array();
+            echo '<div class="mt-2"><p class="text-monospace alert alert-console text-white overflow-auto text-nowrap">';
             echo 'Log output<br>=============================================<br>';
             foreach($_POST["live_categories"] as $key => $value){
                 $liveStreamsCategory = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_streams&category_id=" . $value, false), true);
                 $liveStreams = array_merge($liveStreams, $liveStreamsCategory);
             }
-        }
-
-        //$liveStreams = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_streams"), true);
-        echo '<script>window.scrollTo(0, document.body.scrollHeight);</script>';    
-
-        foreach($liveStreams as $key => $value){
-            $displayname = clean($value["name"]);
-
-                echo "Getting picon for: " . $value["name"] . ": " . $value["stream_icon"] . "<br>";
-                if(isset($value["stream_icon"]) && $value["stream_icon"] != ""){
-
-                    $picon = file_get_contents($value["stream_icon"], false);
-
-                    if($picon != false){
-                        $url = strtok($value["stream_icon"], "?");
-                        $filename = strrchr($url, ".");
-                        $filename = strtok($filename, "/");
-
-                        $remotefile='/usr/share/enigma2/picon/' . $displayname . ".png";
-                        $localfile='picon/' . $displayname . ".png";
-                
-                        file_put_contents('picon/' . $displayname . $filename, $picon);
-
-                        if (exif_imagetype("picon/" . $displayname . $filename) == 2) {
-                            $newfilename = ".jpg";
-                            rename('picon/' . $displayname . $filename, 'picon/' . $displayname . $newfilename);
-                            $filename = $newfilename;
-                        }else if (exif_imagetype("picon/" . $displayname . $filename) == 3) {
-                            $newfilename = ".png";
-                            rename('picon/' . $displayname . $filename, 'picon/' . $displayname . $newfilename);
-                            $filename = $newfilename;
-                        }
 
 
-                        if (file_exists("picon/" . $displayname . $filename) && filesize("picon/" . $displayname . $filename) > 0) {
-                            if (exif_imagetype("picon/" . $displayname . $filename) != false ) {
-                                resizePicon("picon/" . $displayname . $filename);
-                                if($uploadFTP){
-                                    if(!ftp_nlist($ftp_conn, "/")){
-                                        $ftp_conn = connectFTP($ftp_server,$ftp_user, $ftp_pass, $login);
+            //$liveStreams = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_streams"), true);
+
+            foreach($liveStreams as $key => $value){
+                $displayname = clean($value["name"]);
+
+                    echo "Getting picon for: " . $value["name"] . ": " . $value["stream_icon"] . "<br>";
+                    if(isset($value["stream_icon"]) && $value["stream_icon"] != ""){
+
+                        $picon = file_get_contents($value["stream_icon"], false);
+
+                        if($picon != false){
+                            $url = strtok($value["stream_icon"], "?");
+                            $filename = strrchr($url, ".");
+                            $filename = strtok($filename, "/");
+
+                            $remotefile='/usr/share/enigma2/picon/' . $displayname . ".png";
+                            $localfile='picon/' . $displayname . ".png";
+                    
+                            file_put_contents('picon/' . $displayname . $filename, $picon);
+
+                            if (exif_imagetype("picon/" . $displayname . $filename) == 2) {
+                                $newfilename = ".jpg";
+                                rename('picon/' . $displayname . $filename, 'picon/' . $displayname . $newfilename);
+                                $filename = $newfilename;
+                            }else if (exif_imagetype("picon/" . $displayname . $filename) == 3) {
+                                $newfilename = ".png";
+                                rename('picon/' . $displayname . $filename, 'picon/' . $displayname . $newfilename);
+                                $filename = $newfilename;
+                            }
+
+
+                            if (file_exists("picon/" . $displayname . $filename) && filesize("picon/" . $displayname . $filename) > 0) {
+                                if (exif_imagetype("picon/" . $displayname . $filename) != false ) {
+                                    resizePicon("picon/" . $displayname . $filename);
+                                    if($uploadFTP){
+                                        if(!ftp_nlist($ftp_conn, "/")){
+                                            $ftp_conn = connectFTP($ftp_server,$ftp_user, $ftp_pass, $login);
+                                        }
+                                        ftp_put($ftp_conn, $remotefile, $localfile, FTP_BINARY);
                                     }
-                                    ftp_put($ftp_conn, $remotefile, $localfile, FTP_BINARY);
                                 }
+                                if($uploadFTP){
+                                    unlink($localfile);
+                                }
+                                
                             }
-                            if($uploadFTP){
-                                unlink($localfile);
-                            }
-                            
                         }
-                    }
-                } 
-  
-                ob_flush();
-                flush();
-            }
-            if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
-                echo "=============================================<br>Finished!";
-                echo '</div></p>';
-                echo '<script>let lb=document.getElementById("loading_button"); lb.removeChild(lb.children[0]);lb.disabled="";lb.innerHTML="Generate Picons";</script>';    
-            }
+                    } 
+    
+                    ob_flush();
+                    flush();
+                }
 
+                echo "=============================================<br>Finished!";
+                echo '</div>';
+                echo '<script>let lb=document.getElementById("loading_button"); lb.removeChild(lb.children[0]);lb.classList.remove("disabled");lb.innerHTML="<< Back to channel list";</script>';    
+            
+            }
         ?>
         </div>
 
