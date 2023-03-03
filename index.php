@@ -174,7 +174,7 @@ if($clearPiconsAtStart){
                 }
 
                 if($ftp_login){
-                    echo "Connected as $ftp_user@$ftp_server";
+                    echo "FTP: $ftp_user@$ftp_server";
                     echo  " [$hardware] <br> ";
 
                 }else{
