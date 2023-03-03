@@ -203,7 +203,7 @@ if($clearPiconsAtStart){
                 }        
             }
         }
-        if(!isset($_POST["generate_picons"]) && !isset($_POST["live_categories"])){
+        if(!isset($_POST["generate_picons"]) || (isset($_POST["generate_picons"]) && !isset($_POST["live_categories"]))){
             $liveStreamCategories = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_categories", false), true);
             echo '<h6 class="my-3">Select categories to generate picons for. Userbouquets from receiver are pre-selected.</h6>';
             echo '<button type="button" class="btn btn-primary btn-sm rounded-0" onclick="toggleSelect()">Select/Deselect All</button>';
