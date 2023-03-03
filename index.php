@@ -125,7 +125,8 @@ if($clearPiconsAtStart){
         .alert-console{
             background-color: #0c0c0c !important;
             font-size: .9em;
-            max-height: 800px;
+            min-height: 400px;
+            max-height: 400px;
 
         }
 
@@ -174,7 +175,7 @@ if($clearPiconsAtStart){
                 }
 
                 if($ftp_login){
-                    echo "FTP: $ftp_user@$ftp_server";
+                    echo "Connected as $ftp_user@$ftp_server";
                     echo  " [$hardware] <br> ";
 
                 }else{
@@ -268,6 +269,7 @@ if($clearPiconsAtStart){
         }
 
         //$liveStreams = json_decode(file_get_contents("$dns/player_api.php?username=$user&password=$pass&action=get_live_streams"), true);
+        echo '<script>window.scrollTo(0, document.body.scrollHeight);</script>';    
 
         foreach($liveStreams as $key => $value){
             $displayname = clean($value["name"]);
@@ -314,7 +316,10 @@ if($clearPiconsAtStart){
                             
                         }
                     }
-                }   
+                } 
+  
+                ob_flush();
+                flush();
             }
             if(isset($_POST["generate_picons"]) && isset($_POST["live_categories"])){
                 echo "=============================================<br>Finished!";
