@@ -34,7 +34,7 @@ After that you should be able to open the webinterface in your browser via *loca
 
 The header tells you if your FTP and XTREAM connection was successfull.
 
-If all went well, you should see your live categories in the list. Your Userbouquets from receiver are pre-selected (this only works if you dont have a prefix set in jedimakerxtream; the bouqeuts must be named identically). Of course you can select the categories manually (multiple with CTRL+leftclick or SHIFT+leftclick).
+If all went well, you should see your live categories in the list. Your Userbouquets from receiver are pre-selected (this only works if you dont have a prefix set in jedimakerxtream; the bouqeuts must be named identically). Of course you can select the categories manually.
 
 Check the box, if you want to upload the picons directly to your e2 box. Otherwise, picons will be created in subfolder /picon (you have to create that first) of your htdocs folder.
 
