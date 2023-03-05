@@ -113,8 +113,8 @@ if($clearPiconsAtStart){
   
     <style>
     
-        .bg-secondary{
-            background-color: #8037da !important;
+        .bg-primary{
+            background-color: #4D1491 !important;
         }
 
         .btn-primary{
@@ -128,10 +128,6 @@ if($clearPiconsAtStart){
             min-height: 600px;
             max-height: 600px;
 
-        }
-
-        .bg-primary{
-            background-color: #4D1491 !important;
         }
 
         .form-check-input:checked{
@@ -161,10 +157,11 @@ if($clearPiconsAtStart){
     <title>E2 Xtream Picons</title>
 </head>
 <body>
-    <div class="container p-0 bg-secondary vh-100">
+    <div class="container-fluid p-0 bg-light vh-100">
 
-        <div class="container p-2 bg-primary text-white text-center ">
-            <h2>E2 ❌TREAM PICONS</h2>
+        <div class="container-fluid text-center p-2 bg-primary text-white">
+
+            <h3>E2 ❌TREAM PICONS</h3>
             <p>
             <?php
                 echo "<hr><p>";
@@ -190,7 +187,7 @@ if($clearPiconsAtStart){
 
             </p>
         </div>
-        <div class="container py-2 px-3 bg-secondary text-white">
+        <div class="container bg-light py-2 px-3">
 
         <?php
         if($ftp_login){
