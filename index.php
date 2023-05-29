@@ -20,12 +20,17 @@ function clean($string) {
     
     $suffix = strrchr($originalImage, ".");
 
-    if($suffix == ".jpg" || $suffix == ".jpeg"){    
-        $image = imagecreatefromjpeg($originalImage);
+    if($suffix == ".jpg" || $suffix == ".jpeg" || $suffix == ".webp"){    
+        if($suffix == ".jpg" || $suffix == ".jpeg"){
+            $image = imagecreatefromjpeg($originalImage);
+        }else if($suffix == ".webp"){
+            $image = imagecreatefromwebp($originalImage);
+        }
         imagepng($image, rtrim($originalImage, $suffix) . ".png");
         unlink($originalImage);
         $originalImage = rtrim($originalImage, $suffix) . ".png";
     }
+
 
     $uncroppedImage = imagecreatefrompng($originalImage);
     
