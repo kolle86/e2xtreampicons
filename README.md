@@ -18,17 +18,14 @@ I recommend using an [XAMPP](https://www.apachefriends.org/de/index.html)-system
 
 If you do use xampp, just copy the php files to the htdocs folder and edit the config.php. You have to enter:
 
-`$ftp_server = ""; //IP of e2 Receiver`
-
-`$ftp_user = ""; // FTP User on e2 receiver`
-
-`$ftp_pass = ""; // FTP password`
-
-`$user = ""; // xtream codes username`
-
-`$pass = ""; // xtream codes password`
-
-`$dns = "http://providerdns:providerport"; // xtream codes provider url`
+```
+$ftp_server = ""; //IP of e2 Receiver
+$ftp_user = ""; // FTP User on e2 receiver
+$ftp_pass = ""; // FTP password
+$user = ""; // xtream codes username
+$pass = ""; // xtream codes password
+$dns = "http://providerdns:providerport"; // xtream codes provider url
+```
 
 After that you should be able to open the webinterface in your browser via *localhost*.
 
